@@ -12,8 +12,8 @@
 #   на любое большее количество друзей.
 
 
-friends: dict = {'Kenny': ('axe', 'boots', 'firewood'),
-                 'Stan': ('axe', 'boots', 'water', 'meat'),
+friends: dict = {'Kenny': ('axe', 'boots', 'home'),
+                 'Stan': ('axe', 'boots', 'home', 'meat'),
                  'Cartman': ('axe', 'boots', 'bow', 'meat')}
 
 # for friend, items in friends.items():
@@ -30,10 +30,11 @@ common_dict: dict = dict()
 common_dict_1: dict = dict()
 common_set = set()
 for friend, items in friends.items():
+    common_set = set(items)
     for friend_1, items_1 in friends.items():
         if friend != friend_1:
             if len(common_set) > 0:
-                common_set = common_set.intersection(set(items_1))
+                common_set = common_set.union(set(items).symmetric_difference(set(items_1)))
             else:
                 common_set = set(items_1)
     common_dict[friend] = common_set
