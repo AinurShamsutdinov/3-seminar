@@ -20,19 +20,35 @@ friends: dict = {'Kenny': ('axe', 'boots', 'firewood'),
 #     print(f'Friend {friend}, items {items}')
 #
 # for friend, items in friends.items():
-#     diff: set = set()
+#     common_set = set()
 #     for friend_1, items_1 in friends.items():
 #         if friend != friend_1:
-#             diff.update(set(items_1))
-#     intersection = set(items) - diff
-#     print(f'Friend {friend}, unique items {intersection}')
+#             common_set = set(items) - set(items_1)
+#     print(f'Friend {friend}, unique items {common_set}')
 
-unique_set: set = set()
+common_dict: dict = dict()
+common_dict_1: dict = dict()
+common_set = set()
 for friend, items in friends.items():
-    inter_set: set = set()
     for friend_1, items_1 in friends.items():
         if friend != friend_1:
-            inter_set.update((set(items).intersection(set(items_1))))
-    print(f'Friend {friend}, intersection items {inter_set}')
-    same_items = set(items) - inter_set
-    print(f'Friend {friend}, same items {same_items}')
+            if len(common_set) > 0:
+                common_set = common_set.intersection(set(items_1))
+            else:
+                common_set = set(items_1)
+    common_dict[friend] = common_set
+    common_set = set()
+
+for friend, items in common_dict.items():
+    for friend_1, items_1 in common_dict.items():
+        if friend != friend_1:
+            if len(common_set) > 0:
+                common_set -= set(items_1)
+            else:
+                common_set = set(items_1)
+    common_dict_1[friend] = common_set
+    common_set = set()
+
+
+print(f'{common_dict = }')
+print(f'{common_dict_1 = }')
