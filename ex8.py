@@ -12,44 +12,31 @@
 #   на любое большее количество друзей.
 
 
-friends: dict = {'Kenny': ('axe', 'boots', 'home'),
-                 'Stan': ('axe', 'boots', 'home', 'meat'),
-                 'Cartman': ('axe', 'boots', 'bow', 'meat')}
+friends: dict = {'Kenny': ('axe', 'boots', 'father'),
+                 'Stan': ('axe', 'money', 'father', 'meat'),
+                 'Cartman': ('axe', 'money', 'bow','meat'),
+                 'Kyle': ('axe', 'money', 'father', 'meat')}
 
-# for friend, items in friends.items():
-#     print(f'Friend {friend}, items {items}')
-#
-# for friend, items in friends.items():
-#     common_set = set()
-#     for friend_1, items_1 in friends.items():
-#         if friend != friend_1:
-#             common_set = set(items) - set(items_1)
-#     print(f'Friend {friend}, unique items {common_set}')
+for friend, items in friends.items():
+    print(f'Friend {friend}, items {items}')
 
-common_dict: dict = dict()
-common_dict_1: dict = dict()
+for friend, items in friends.items():
+    common_set = set()
+    for friend_1, items_1 in friends.items():
+        if friend != friend_1:
+            common_set = set(items) - set(items_1)
+    print(f'Friend {friend}, unique items {common_set}')
+
+missing_items: dict = dict()
 common_set = set()
 for friend, items in friends.items():
-    common_set = set(items)
     for friend_1, items_1 in friends.items():
         if friend != friend_1:
             if len(common_set) > 0:
-                common_set = common_set.union(set(items).symmetric_difference(set(items_1)))
+                common_set.intersection_update(set(items_1))
             else:
                 common_set = set(items_1)
-    common_dict[friend] = common_set
+    missing_items[friend] = common_set - set(items)
     common_set = set()
 
-for friend, items in common_dict.items():
-    for friend_1, items_1 in common_dict.items():
-        if friend != friend_1:
-            if len(common_set) > 0:
-                common_set -= set(items_1)
-            else:
-                common_set = set(items_1)
-    common_dict_1[friend] = common_set
-    common_set = set()
-
-
-print(f'{common_dict = }')
-print(f'{common_dict_1 = }')
+print(f'{missing_items = }')
